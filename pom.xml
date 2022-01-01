@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.gpaddons</groupId>
     <artifactId>blockhighlightboundaries</artifactId>
@@ -11,86 +11,86 @@
     <description>An addon changing boundaries to use block highlights
 </description>
 
-    <developers>
-        <developer>
-            <name>Jikoo</name>
-        </developer>
-    </developers>
+  <developers>
+    <developer>
+      <name>Jikoo</name>
+    </developer>
+  </developers>
 
-    <properties>
-        <project.api-version>1.17</project.api-version>
-    </properties>
+  <properties>
+    <project.api-version>1.17</project.api-version>
+  </properties>
 
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
-        </repository>
-    </repositories>
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+    <repository>
+      <id>spigot-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
+    </repository>
+  </repositories>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>23.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.Jikoo</groupId>
-            <artifactId>GriefPrevention</artifactId>
-            <version>dev~visualization-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-      <dependency>
-        <groupId>com.github.dmulloy2</groupId>
-        <artifactId>ProtocolLib</artifactId>
-        <version>4.7.0</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-all</artifactId>
-        <version>4.1.72.Final</version>
-        <scope>provided</scope>
-      </dependency>
-    </dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.17.1-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+      <version>23.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.Jikoo</groupId>
+      <artifactId>GriefPrevention</artifactId>
+      <version>dev~visualization-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>4.1.72.Final</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.dmulloy2</groupId>
+      <artifactId>ProtocolLib</artifactId>
+      <version>4.7.0</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
-    <build>
-        <defaultGoal>clean package</defaultGoal>
-        <finalName>${project.name}</finalName>
+  <build>
+    <defaultGoal>clean package</defaultGoal>
+    <finalName>${project.name}</finalName>
 
-        <resources>
-            <resource>
-                <filtering>true</filtering>
-                <directory>${basedir}/src/main/resources</directory>
-                <includes>
-                    <include>*.yml</include>
-                </includes>
-            </resource>
-        </resources>
+    <resources>
+      <resource>
+        <filtering>true</filtering>
+        <directory>${basedir}/src/main/resources</directory>
+        <includes>
+          <include>*.yml</include>
+        </includes>
+      </resource>
+    </resources>
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>17</source>
-                    <target>17</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
 
