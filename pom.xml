@@ -5,19 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.gpaddons</groupId>
-    <artifactId>genericartifact</artifactId>
+    <artifactId>blockhighlightboundaries</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>GenericAddon</name>
-    <description>GenericDescription</description>
+    <name>GPBlockHighlightBoundaries</name>
+    <description>An addon changing boundaries to use block highlights
+</description>
 
     <developers>
         <developer>
-            <name>GenericAuthor</name>
+            <name>Jikoo</name>
         </developer>
     </developers>
 
     <properties>
-        <project.api-version>1.13</project.api-version>
+        <project.api-version>1.17</project.api-version>
     </properties>
 
     <repositories>
@@ -35,7 +36,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>${project.api-version}.2-R0.1-SNAPSHOT</version>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -45,11 +46,23 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.TechFortress</groupId>
+            <groupId>com.github.Jikoo</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.17.1</version>
+            <version>dev~visualization-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+      <dependency>
+        <groupId>com.github.dmulloy2</groupId>
+        <artifactId>ProtocolLib</artifactId>
+        <version>4.7.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-all</artifactId>
+        <version>4.1.72.Final</version>
+        <scope>provided</scope>
+      </dependency>
     </dependencies>
 
     <build>
@@ -72,8 +85,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
         </plugins>

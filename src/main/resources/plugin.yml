@@ -6,3 +6,5 @@ author: "${project.developers[0].name}"
 description: "${project.description}"
 depend:
   - GriefPrevention
+  - ProtocolLib
+softdepend: []
