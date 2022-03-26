@@ -1,5 +1,7 @@
 package com.github.gpaddons.blockhighlightboundaries;
 
+import com.github.gpaddons.blockhighlightboundaries.impl.packetevents1.PacketEvents1Provider;
+import com.github.gpaddons.blockhighlightboundaries.impl.packetevents2.PacketEvents2Provider;
 import com.github.gpaddons.blockhighlightboundaries.impl.protocollib.ProtocolLibProvider;
 import com.griefprevention.events.BoundaryVisualizationEvent;
 import com.griefprevention.visualization.VisualizationProvider;
@@ -61,7 +63,10 @@ public class GPBlockHighlightBoundaries extends JavaPlugin implements Listener
 
   private @Nullable VisualizationProvider getProvider() {
     List<Supplier<BoundaryProvider>> providers = List.of(
-        ProtocolLibProvider::new
+        // Prefer ProtocolLib, it's more reliable/stable.
+        ProtocolLibProvider::new,
+        PacketEvents2Provider::new,
+        PacketEvents1Provider::new
     );
 
     return providers.stream().map(Supplier::get)
