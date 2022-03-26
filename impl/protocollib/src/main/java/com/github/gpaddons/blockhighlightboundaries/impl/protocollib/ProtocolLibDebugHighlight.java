@@ -1,34 +1,38 @@
-package com.github.gpaddons.blockhighlightboundaries;
+package com.github.gpaddons.blockhighlightboundaries.impl.protocollib;
 
 import com.comphenix.protocol.PacketType.Play.Server;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.wrappers.MinecraftKey;
+import com.github.gpaddons.blockhighlightboundaries.HighlightConfiguration;
+import com.github.gpaddons.blockhighlightboundaries.type.DebugBlockHighlight;
+import com.github.gpaddons.blockhighlightboundaries.type.VisualizationElementType;
 import com.griefprevention.util.IntVector;
+import com.griefprevention.visualization.Boundary;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.UnaryOperator;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ProtocolLibElement extends BlockHighlightElement {
+class ProtocolLibDebugHighlight extends DebugBlockHighlight {
 
   /**
-   * Construct a new {@code ProtocolLibElement}.
+   * Construct a new {@code ProtocolLibDebugHighlight}.
    *
-   * @param coordinate     the in-world coordinate of the element
-   * @param color the color of the element
-   * @param durationMillis the
+   * @param coordinate the in-world coordinate of the element
+   * @param configuration the configuration for highlights
+   * @param boundary the boundary the element belongs to
+   * @param visualizationElementType the type of element being visualized
    */
-  public ProtocolLibElement(
+  public ProtocolLibDebugHighlight(
       @NotNull IntVector coordinate,
-      @NotNull Color color,
-      @NotNull String name,
-      int durationMillis) {
-    super(coordinate, color, name, durationMillis);
+      @NotNull HighlightConfiguration configuration,
+      @NotNull Boundary boundary,
+      @NotNull VisualizationElementType visualizationElementType) {
+    super(coordinate, configuration, boundary, visualizationElementType);
   }
 
   @Override
@@ -37,7 +41,7 @@ public class ProtocolLibElement extends BlockHighlightElement {
       @NotNull UnaryOperator<@NotNull ByteBuf> write)
       throws InvocationTargetException {
     PacketContainer packet = new PacketContainer(Server.CUSTOM_PAYLOAD);
-    packet.getMinecraftKeys().write(0, new MinecraftKey("debug/game_test_add_marker"));
+    packet.getMinecraftKeys().write(0, new MinecraftKey(getChannel()));
     Object packetDataSerializer = MinecraftReflection.getPacketDataSerializer(write.apply(Unpooled.buffer()));
     packet.getModifier().withType(ByteBuf.class).write(0, packetDataSerializer);
     ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);

@@ -4,12 +4,16 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.gpaddons</groupId>
-    <artifactId>blockhighlightboundaries</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>GPBlockHighlightBoundaries</name>
-    <description>An addon changing boundaries to use block highlights
-</description>
+  <groupId>com.github.gpaddons</groupId>
+  <artifactId>blockhighlightboundaries-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+
+  <modules>
+    <module>core</module>
+    <module>impl/protocollib</module>
+    <module>plugin</module>
+  </modules>
 
   <developers>
     <developer>
@@ -19,6 +23,9 @@
 
   <properties>
     <project.api-version>1.17</project.api-version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
   <repositories>
@@ -32,38 +39,84 @@
     </repository>
   </repositories>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.spigotmc</groupId>
-      <artifactId>spigot-api</artifactId>
-      <version>1.17.1-R0.1-SNAPSHOT</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jetbrains</groupId>
-      <artifactId>annotations</artifactId>
-      <version>23.0.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.github.Jikoo</groupId>
-      <artifactId>GriefPrevention</artifactId>
-      <version>dev~visualization-SNAPSHOT</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-all</artifactId>
-      <version>4.1.72.Final</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.github.dmulloy2</groupId>
-      <artifactId>ProtocolLib</artifactId>
-      <version>4.7.0</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-api</artifactId>
+        <version>1.17.1-R0.1-SNAPSHOT</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jetbrains</groupId>
+        <artifactId>annotations</artifactId>
+        <version>23.0.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.github.TechFortress</groupId>
+        <artifactId>GriefPrevention</artifactId>
+        <version>16.18</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-all</artifactId>
+        <version>4.1.72.Final</version>
+        <scope>provided</scope>
+      </dependency>
+      <!-- Adapter: ProtocolLib -->
+      <dependency>
+        <groupId>com.github.dmulloy2</groupId>
+        <artifactId>ProtocolLib</artifactId>
+        <version>4.7.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <!-- Modules -->
+      <dependency>
+        <groupId>com.github.gpaddons</groupId>
+        <artifactId>blockhighlightboundaries-core</artifactId>
+        <version>${project.version}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.github.gpaddons</groupId>
+        <artifactId>blockhighlightboundaries-packetevents1</artifactId>
+        <version>${project.version}</version>
+        <scope>compile</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>com.github.gpaddons</groupId>
+            <artifactId>blockhighlightboundaries-core</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>com.github.gpaddons</groupId>
+        <artifactId>blockhighlightboundaries-packetevents2</artifactId>
+        <version>${project.version}</version>
+        <scope>compile</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>com.github.gpaddons</groupId>
+            <artifactId>blockhighlightboundaries-core</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>com.github.gpaddons</groupId>
+        <artifactId>blockhighlightboundaries-protocollib</artifactId>
+        <version>${project.version}</version>
+        <scope>compile</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>com.github.gpaddons</groupId>
+            <artifactId>blockhighlightboundaries-core</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <defaultGoal>clean package</defaultGoal>

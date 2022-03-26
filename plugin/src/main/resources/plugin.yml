@@ -4,7 +4,10 @@ version: "${project.version}"
 api-version: "${project.api-version}"
 author: "${project.developers[0].name}"
 description: "${project.description}"
-depend:
-  - GriefPrevention
-  - ProtocolLib
-softdepend: []
+depend: [ GriefPrevention ]
+softdepend: [ ProtocolLib ]
+
+commands:
+  gpbhbreload:
+    description: "Reload the GPBlockHighlightBoundaries configuration."
+    permission: "gpbhb.reload"

@@ -1,75 +1,79 @@
-spacing: 3
+spacing: 10
 viewDistance: 150
 displaySeconds: 60
-markers:
+# Types: DEBUG_BLOCK, GLOWING_ENTITY
+type: GLOWING_ENTITY
+# Styles: FLAT, SNAP_TO_SURFACE
+style: FLAT
+colors:
   # Default yellow
   CLAIM:
-    corner:
+    CORNER:
       red: 200
       green: 200
       blue: 0
       alpha: 200
-    side:
+    SIDE:
       red: 200
       green: 200
       blue: 0
       alpha: 100
   # Default orange
   ADMIN_CLAIM:
-    corner:
+    CORNER:
       red: 255
       green: 127
       blue: 0
       alpha: 255
-    side:
+    SIDE:
       red: 255
       green: 127
       blue: 0
       alpha: 100
   # Default white
   SUBDIVISION:
-    corner:
+    CORNER:
       red: 255
       green: 255
       blue: 255
       alpha: 200
-    side:
+    SIDE:
       red: 255
       green: 255
       blue: 255
       alpha: 100
   # Default cyan
   INITIALIZE_ZONE:
-    corner:
+    CORNER:
       red: 0
       green: 200
       blue: 200
       alpha: 200
-    side:
+    SIDE:
       red: 0
       green: 200
       blue: 200
       alpha: 100
   # Default red
   CONFLICT_ZONE:
-    corner:
+    CORNER:
       red: 200
       green: 0
       blue: 0
       alpha: 200
-    side:
+    SIDE:
       red: 200
       green: 0
       blue: 0
       alpha: 100
   # Default green
   NATURE_RESTORATION_ZONE:
-    corner:
+    CORNER:
       red: 0
       green: 200
       blue: 0
       alpha: 200
-    side:
+    SIDE:
       red: 0
       green: 200
       blue: 0
