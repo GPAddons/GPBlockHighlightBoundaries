@@ -49,13 +49,6 @@
     </dependency>
   </dependencies>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>maven-snapshots</id>
-      <url>https://repository.apache.org/content/repositories/snapshots/</url>
-    </pluginRepository>
-  </pluginRepositories>
-
   <build>
     <defaultGoal>clean package</defaultGoal>
     <finalName>${project.name}</finalName>
@@ -83,7 +76,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.3.0-SNAPSHOT</version>
+        <version>3.3.0</version>
         <executions>
           <execution>
             <goals>
