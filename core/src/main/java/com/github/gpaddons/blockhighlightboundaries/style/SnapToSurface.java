@@ -8,6 +8,10 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A {@link RealCornerVisualization} abstraction that attempts to snap elements to the nearest
+ * surface.
+ */
 public abstract class SnapToSurface extends RealCornerVisualization {
 
   private static final int SEARCH_DISTANCE = 10;

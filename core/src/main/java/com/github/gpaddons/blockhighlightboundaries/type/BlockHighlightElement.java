@@ -6,6 +6,9 @@ import com.griefprevention.visualization.BlockElement;
 import com.griefprevention.visualization.Boundary;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A configurable {@link BlockElement}.
+ */
 public abstract class BlockHighlightElement extends BlockElement {
 
   protected final HighlightConfiguration configuration;
@@ -31,10 +34,22 @@ public abstract class BlockHighlightElement extends BlockElement {
     this.visualizationElementType = visualizationElementType;
   }
 
+  /**
+   * Get the name to display for the element.
+   *
+   * @return the name to display for the element
+   */
   public String getName() {
     return configuration.getName(boundary, visualizationElementType);
   }
 
-  public abstract boolean requiresErase();
+  /**
+   * Get the type of visualization element this is.
+   *
+   * @return the visualization element type
+   */
+  public VisualizationElementType getElementType() {
+    return visualizationElementType;
+  }
 
 }

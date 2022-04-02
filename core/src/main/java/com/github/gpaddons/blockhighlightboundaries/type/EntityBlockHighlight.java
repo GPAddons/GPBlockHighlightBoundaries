@@ -17,9 +17,16 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
+/**
+ * A {@link BlockHighlightElement} abstraction for using glowing entities to highlight blocks.
+ *
+ * <p>Internally this uses magma cubes of size 1. Size 2 highlights blocks very nicely, but prevents
+ * interaction. As the entities are clientside and we do not do additional packet handling, they are
+ * not removed on interaction.
+ */
 public abstract class EntityBlockHighlight extends BlockHighlightElement {
 
-  private static final double[] HORIZONTALS = new double[]{ 0.31, 0.69 };
+  private static final double[] HORIZONTALS = { 0.31, 0.69 };
   private static final double[] VERTICALS = { 0.06, .43 };
 
   private final TeamManager teamManager;
@@ -45,6 +52,11 @@ public abstract class EntityBlockHighlight extends BlockHighlightElement {
     this.entities = getLocalEntities();
   }
 
+  /**
+   * Get the slime size set for the associated magma cube entities.
+   *
+   * @return the slime size
+   */
   protected int getSlimeSize() {
     return 1;
   }
@@ -65,6 +77,13 @@ public abstract class EntityBlockHighlight extends BlockHighlightElement {
     }
   }
 
+  /**
+   * Send the {@link Player} the packets required to display an entity with the correct data.
+   *
+   * @param player the recipient
+   * @param fakeEntity the {@link FakeEntity} to spawn
+   * @throws InvocationTargetException if an error occurs creating or sending the packets
+   */
   protected abstract void spawn(@NotNull Player player, @NotNull FakeEntity fakeEntity)
       throws InvocationTargetException;
 
@@ -82,15 +101,17 @@ public abstract class EntityBlockHighlight extends BlockHighlightElement {
     }
   }
 
+  /**
+   * Send the {@link Player} the packet required to remove entities.
+   *
+   * @param player the recipient
+   * @param entities the {@link FakeEntity FakeEntities} to despawn
+   * @throws InvocationTargetException if an error occurs creating or sending the packets
+   */
   protected abstract void remove(
       @NotNull Player player,
       @NotNull @Unmodifiable Collection<@NotNull FakeEntity> entities)
       throws InvocationTargetException;
-
-  @Override
-  public boolean requiresErase() {
-    return true;
-  }
 
   private Collection<FakeEntity> getLocalEntities() {
     if (visualizationElementType == VisualizationElementType.SIDE) {
@@ -110,6 +131,7 @@ public abstract class EntityBlockHighlight extends BlockHighlightElement {
     return localEntities;
   }
 
+  /** Container for fake entity data. */
   protected record FakeEntity(int entityId, UUID uuid, Vector localPosition) {
 
     private FakeEntity(int entityId, Vector localPosition) {

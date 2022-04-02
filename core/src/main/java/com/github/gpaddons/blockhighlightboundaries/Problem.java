@@ -2,6 +2,9 @@ package com.github.gpaddons.blockhighlightboundaries;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A wrapper for efficient runtime exception throwing.
+ */
 public class Problem extends RuntimeException {
 
   private Problem(@NotNull Exception exception) {

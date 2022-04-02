@@ -1,3 +1,5 @@
+# Configuration for GPBlockHighlightBoundaries.
+# Confused about options? Check the wiki: https://github.com/GPAddons/GPBlockHighlightBoundaries/wiki/Configuration
 spacing: 10
 viewDistance: 150
 displaySeconds: 60
@@ -6,75 +8,81 @@ type: GLOWING_ENTITY
 # Styles: FLAT, SNAP_TO_SURFACE
 style: FLAT
 colors:
-  # Default yellow
   CLAIM:
-    CORNER:
-      red: 200
-      green: 200
-      blue: 0
-      alpha: 200
-    SIDE:
-      red: 200
-      green: 200
-      blue: 0
-      alpha: 100
-  # Default orange
-  ADMIN_CLAIM:
+    # gold
     CORNER:
       red: 255
-      green: 127
+      green: 170
       blue: 0
       alpha: 255
+    # yellow
     SIDE:
       red: 255
-      green: 127
-      blue: 0
-      alpha: 100
-  # Default white
+      green: 255
+      blue: 85
+      alpha: 255
+  ADMIN_CLAIM:
+    # dark_purple
+    CORNER:
+      red: 170
+      green: 0
+      blue: 170
+      alpha: 255
+    # light_purple
+    SIDE:
+      red: 255
+      green: 85
+      blue: 255
+      alpha: 255
   SUBDIVISION:
+    # gray
     CORNER:
-      red: 255
-      green: 255
-      blue: 255
-      alpha: 200
+      red: 170
+      green: 170
+      blue: 170
+      alpha: 255
+    # white
     SIDE:
       red: 255
       green: 255
       blue: 255
-      alpha: 100
-  # Default cyan
+      alpha: 255
   INITIALIZE_ZONE:
+    # dark_aqua
     CORNER:
       red: 0
-      green: 200
-      blue: 200
-      alpha: 200
+      green: 170
+      blue: 170
+      alpha: 255
+    # aqua
     SIDE:
-      red: 0
-      green: 200
-      blue: 200
-      alpha: 100
-  # Default red
+      red: 85
+      green: 255
+      blue: 255
+      alpha: 255
   CONFLICT_ZONE:
+    # dark_red
     CORNER:
-      red: 200
+      red: 170
       green: 0
       blue: 0
-      alpha: 200
+      alpha: 255
+    # red
     SIDE:
-      red: 200
-      green: 0
-      blue: 0
-      alpha: 100
-  # Default green
+      red: 255
+      green: 85
+      blue: 85
+      alpha: 255
   NATURE_RESTORATION_ZONE:
+    # dark_green
     CORNER:
       red: 0
-      green: 200
+      green: 170
       blue: 0
-      alpha: 200
+      alpha: 255
+    # green
     SIDE:
-      red: 0
-      green: 200
-      blue: 0
-      alpha: 100
+      red: 85
+      green: 255
+      blue: 85
+      alpha: 255

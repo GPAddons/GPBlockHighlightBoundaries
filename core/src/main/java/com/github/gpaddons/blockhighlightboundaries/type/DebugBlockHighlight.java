@@ -14,6 +14,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A {@link BlockHighlightElement} that is drawn using the block debug functionality.
+ */
 public abstract class DebugBlockHighlight extends BlockHighlightElement {
 
   /**
@@ -32,14 +35,29 @@ public abstract class DebugBlockHighlight extends BlockHighlightElement {
     super(coordinate, configuration, boundary, visualizationElementType);
   }
 
+  /**
+   * Get the {@link Color} the block highlight will be.
+   *
+   * @return the RGBA color
+   */
   public Color getColor() {
     return configuration.getColor(boundary.type(), visualizationElementType);
   }
 
-  public int getDurationMillis() {
+  /**
+   * Get the number of milliseconds the highlight should be displayed for.
+   *
+   * @return the display duration in milliseconds
+   */
+  public int getDisplayMillis() {
     return configuration.getDisplayMillis();
   }
 
+  /**
+   * Get the name of the channel of the custom payload.
+   *
+   * @return the name of the payload channel
+   */
   protected String getChannel() {
     return "debug/game_test_add_marker";
   }
@@ -85,10 +103,17 @@ public abstract class DebugBlockHighlight extends BlockHighlightElement {
     buffer.writeLong(getBlockPositionLong());
     buffer.writeInt(getColorInt());
     writeString(buffer, getName());
-    buffer.writeInt(getDurationMillis());
+    buffer.writeInt(getDisplayMillis());
     return buffer;
   }
 
+  /**
+   * Send the payload containing the specified data to the {@link Player} visualizing the element.
+   *
+   * @param player the recipient
+   * @param write the {@link ByteBuf} modification
+   * @throws InvocationTargetException if an error occurs creating or sending the packet
+   */
   protected abstract void sendPacket(
       @NotNull Player player,
       @NotNull UnaryOperator<@NotNull ByteBuf> write)
@@ -110,11 +135,6 @@ public abstract class DebugBlockHighlight extends BlockHighlightElement {
     writeString(buffer, "");
     buffer.writeInt(0);
     return buffer;
-  }
-
-  @Override
-  public boolean requiresErase() {
-    return false;
   }
 
 }
