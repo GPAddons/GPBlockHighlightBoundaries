@@ -1,14 +1,26 @@
 package com.github.gpaddons.blockhighlightboundaries.style;
 
 import com.github.gpaddons.blockhighlightboundaries.HighlightConfiguration;
+import com.github.gpaddons.blockhighlightboundaries.Problem;
+import com.github.gpaddons.blockhighlightboundaries.type.BlockHighlightElement;
+import com.github.gpaddons.blockhighlightboundaries.type.FallThroughElement;
 import com.github.gpaddons.blockhighlightboundaries.type.VisualizationElementType;
 import com.griefprevention.util.IntVector;
 import com.griefprevention.visualization.BlockBoundaryVisualization;
 import com.griefprevention.visualization.BlockElement;
 import com.griefprevention.visualization.Boundary;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import me.ryanhamshire.GriefPrevention.PlayerData;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A {@link BlockBoundaryVisualization} that always displays the actual depth of the boundary in
@@ -17,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class RealCornerVisualization extends BlockBoundaryVisualization {
 
   protected final @NotNull HighlightConfiguration config;
+  private long lastSend = 0;
 
   /**
    * Construct a new {@code RealCornerVisualization} with the given configuration.
@@ -70,6 +83,68 @@ public abstract class RealCornerVisualization extends BlockBoundaryVisualization
     };
   }
 
+  @Override
+  protected void draw(@NotNull Player player,
+      @NotNull Boundary boundary) {
+    try {
+      super.draw(player, boundary);
+      this.lastSend = System.currentTimeMillis();
+    } catch (Problem e) {
+      Collection<BlockElement> fallthroughElements = new ArrayList<>();
+      for (BlockElement element : this.elements) {
+        if (element instanceof BlockHighlightElement highlightElement) {
+          ChatColor color = config.getClosestChatColor(boundary.type(), highlightElement.getElementType());
+          fallthroughElements.add(new FallThroughElement(element.getCoordinate(), color));
+        } else {
+          // Somehow not our element? Someone else's problem if it fails again.
+          fallthroughElements.add(element);
+        }
+      }
+
+      this.elements.clear();
+      this.elements.addAll(fallthroughElements);
+
+      // Re-try the draw.
+      super.draw(player, boundary);
+
+      // TODO get logger instance in a better way (via config? Seems hacky, but it's an impl dao)
+      Logger logger = Logger.getLogger("GPBlockHighlightBoundaries");
+      logger.log(Level.SEVERE, "Caught exception while visualizing a claim! Please report this:");
+      logger.log(Level.SEVERE, e, () -> "Visualization error");
+    }
+  }
+
+  @Override
+  protected void scheduleRevert(@NotNull Player player, @NotNull PlayerData playerData) {
+    // Use GP to schedule the revert - we don't have a concept of a managing plugin here, the plugin
+    // is the implementation. Basically the same as super method but with a configurable delay.
+    GriefPrevention.instance.getServer().getScheduler().scheduleSyncDelayedTask(
+        GriefPrevention.instance,
+        () -> {
+          // Only revert if this is the active visualization.
+          if (playerData.getVisibleBoundaries() == this) revert(player);
+        },
+        config.getDisplayMillis() / 50);
+  }
+
+  @Override
+  public void revert(@Nullable Player player) {
+    if (!config.getType().requiresErase()
+        && (lastSend + config.getDisplayMillis()) < System.currentTimeMillis()) {
+      // If already erased, do not send more packets.
+      return;
+    }
+
+    super.revert(player);
+  }
+
+  /**
+   * Find an eligible display coordinate in the same column as the given coordinate.
+   *
+   * @param displayCoord the provided coordinate
+   * @param minY the minimum Y value of the resulting coordinate
+   * @return the display coordinate
+   */
   protected abstract @NotNull IntVector findDisplayCoordinate(
       @NotNull IntVector displayCoord,
       int minY);
