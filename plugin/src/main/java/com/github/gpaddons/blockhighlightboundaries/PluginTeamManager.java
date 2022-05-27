@@ -20,7 +20,7 @@ public class PluginTeamManager implements TeamManager {
   private static final Pattern TEAM_ELEMENT_SEPARATOR;
 
   static {
-    String separator = "__";
+    String separator = "-";
     TEAM_NAME_PREFIX = "bhb" + separator;
     TEAM_NAME_FORMAT = TEAM_NAME_PREFIX + "%s" + separator + "%s";
     TEAM_ELEMENT_SEPARATOR = Pattern.compile(separator);
@@ -74,8 +74,8 @@ public class PluginTeamManager implements TeamManager {
         continue;
       }
 
-      VisualizationType type = parseEnum(nameElements[1], VisualizationType.class);
-      VisualizationElementType element = parseEnum(nameElements[2], VisualizationElementType.class);
+      VisualizationType type = parseEnum(nameElements[2], VisualizationType.class);
+      VisualizationElementType element = parseEnum(nameElements[1], VisualizationElementType.class);
 
       if (type == null || element == null) {
         continue;
@@ -131,7 +131,15 @@ public class PluginTeamManager implements TeamManager {
       team = scoreboard.registerNewTeam(name);
     } catch (IllegalArgumentException ignored) {
       // Support 1.17 - Spigot did not update name length limitations until 1.18.
-      team = scoreboard.registerNewTeam(truncate(name, 16));
+      String truncatedName = truncate(name, 16);
+
+      // If we have a truncated name, re-resolve team.
+      team = scoreboard.getTeam(truncatedName);
+      if (team != null) {
+        return team;
+      }
+
+      team = scoreboard.registerNewTeam(truncatedName);
     }
 
     team.setDisplayName(truncate(name, 128));
@@ -181,7 +189,7 @@ public class PluginTeamManager implements TeamManager {
   private @NotNull String getTeamName(
       @NotNull VisualizationType type,
       @NotNull VisualizationElementType element) {
-    return truncate(String.format(TEAM_NAME_FORMAT, type, element), Short.MAX_VALUE);
+    return truncate(String.format(TEAM_NAME_FORMAT, element, type), Short.MAX_VALUE);
   }
 
   void cleanUp() {
