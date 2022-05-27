@@ -2,6 +2,7 @@ package com.github.gpaddons.blockhighlightboundaries;
 
 import com.github.gpaddons.blockhighlightboundaries.type.VisualizationElementType;
 import com.griefprevention.visualization.VisualizationType;
+import java.util.regex.Pattern;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -13,6 +14,17 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PluginTeamManager implements TeamManager {
+
+  private static final String TEAM_NAME_PREFIX;
+  private static final String TEAM_NAME_FORMAT;
+  private static final Pattern TEAM_ELEMENT_SEPARATOR;
+
+  static {
+    String separator = "__";
+    TEAM_NAME_PREFIX = "bhb" + separator;
+    TEAM_NAME_FORMAT = TEAM_NAME_PREFIX + "%s" + separator + "%s";
+    TEAM_ELEMENT_SEPARATOR = Pattern.compile(separator);
+  }
 
   private final Plugin plugin;
   private final HighlightConfiguration configuration;
@@ -42,13 +54,22 @@ public class PluginTeamManager implements TeamManager {
     reloadScoreboard(mainScoreboard);
   }
 
-  private void reloadScoreboard(Scoreboard scoreboard) {
+  private void reloadScoreboard(@NotNull Scoreboard scoreboard) {
     for (Team team : scoreboard.getTeams()) {
-      if (!team.getName().startsWith("gpbhb__")) {
+      String identifier = team.getName();
+
+      if (!identifier.startsWith(TEAM_NAME_PREFIX)) {
         continue;
       }
 
-      String[] nameElements = team.getName().split("__");
+      // Display name is set to name when initialized.
+      // On 1.17, this allows us to use a much more forgiving name length of 128.
+      String displayName = team.getDisplayName();
+      if (identifier.length() == 16 && displayName.length() > 16) {
+        identifier = displayName;
+      }
+
+      String[] nameElements = TEAM_ELEMENT_SEPARATOR.split(identifier);
       if (nameElements.length < 3) {
         continue;
       }
@@ -106,12 +127,27 @@ public class PluginTeamManager implements TeamManager {
       return team;
     }
 
-    team = scoreboard.registerNewTeam(name);
+    try {
+      team = scoreboard.registerNewTeam(name);
+    } catch (IllegalArgumentException ignored) {
+      // Support 1.17 - Spigot did not update name length limitations until 1.18.
+      team = scoreboard.registerNewTeam(truncate(name, 16));
+    }
+
+    team.setDisplayName(truncate(name, 128));
     team.setOption(Option.COLLISION_RULE, OptionStatus.NEVER);
     team.setOption(Option.NAME_TAG_VISIBILITY, OptionStatus.ALWAYS);
     team.setColor(configuration.getClosestChatColor(type, element));
 
     return team;
+  }
+
+  private @NotNull String truncate(@NotNull String toTruncate, int length) {
+    if (toTruncate.length() <= length) {
+      return toTruncate;
+    }
+
+    return toTruncate.substring(0, length);
   }
 
   @Override
@@ -145,14 +181,14 @@ public class PluginTeamManager implements TeamManager {
   private @NotNull String getTeamName(
       @NotNull VisualizationType type,
       @NotNull VisualizationElementType element) {
-    return String.format("gpbhb__%s__%s", type, element);
+    return truncate(String.format(TEAM_NAME_FORMAT, type, element), Short.MAX_VALUE);
   }
 
   void cleanUp() {
     ScoreboardManager scoreboardManager = plugin.getServer().getScoreboardManager();
     if (scoreboardManager != null) {
       scoreboardManager.getMainScoreboard().getTeams().stream()
-          .filter(team -> team.getName().startsWith("gpbhb__"))
+          .filter(team -> team.getName().startsWith(TEAM_NAME_PREFIX))
           .forEach(Team::unregister);
     }
   }
