@@ -5,7 +5,7 @@ api-version: "${project.api-version}"
 author: "${project.developers[0].name}"
 description: "${project.description}"
 depend: [ GriefPrevention ]
-softdepend: [ ProtocolLib, PacketEvents ]
+softdepend: [ ProtocolLib, PacketEvents, Floodgate ]
 
 commands:
   gpbhbreload:

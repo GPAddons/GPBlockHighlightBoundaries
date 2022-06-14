@@ -1,11 +1,9 @@
 package com.github.gpaddons.blockhighlightboundaries.type;
 
 import com.github.gpaddons.blockhighlightboundaries.HighlightConfiguration;
-import com.github.gpaddons.blockhighlightboundaries.Problem;
 import com.github.gpaddons.blockhighlightboundaries.TeamManager;
 import com.griefprevention.util.IntVector;
 import com.griefprevention.visualization.Boundary;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -63,18 +61,14 @@ public abstract class EntityBlockHighlight extends BlockHighlightElement {
 
   @Override
   protected void draw(@NotNull Player player, @NotNull World world) {
-    try {
-      for (FakeEntity entity : entities) {
-        spawn(player, entity);
-      }
-      this.teamManager.addTeamEntries(
-          player,
-          boundary.type(),
-          visualizationElementType,
-          entities.stream().map(entity -> entity.uuid().toString()).collect(Collectors.toList()));
-    } catch (InvocationTargetException e) {
-      Problem.sneaky(e);
+    for (FakeEntity entity : entities) {
+      spawn(player, entity);
     }
+    this.teamManager.addTeamEntries(
+        player,
+        boundary.type(),
+        visualizationElementType,
+        entities.stream().map(entity -> entity.uuid().toString()).collect(Collectors.toList()));
   }
 
   /**
@@ -82,10 +76,8 @@ public abstract class EntityBlockHighlight extends BlockHighlightElement {
    *
    * @param player the recipient
    * @param fakeEntity the {@link FakeEntity} to spawn
-   * @throws InvocationTargetException if an error occurs creating or sending the packets
    */
-  protected abstract void spawn(@NotNull Player player, @NotNull FakeEntity fakeEntity)
-      throws InvocationTargetException;
+  protected abstract void spawn(@NotNull Player player, @NotNull FakeEntity fakeEntity);
 
   @Override
   protected void erase(@NotNull Player player, @NotNull World world) {
@@ -94,11 +86,7 @@ public abstract class EntityBlockHighlight extends BlockHighlightElement {
         boundary.type(),
         visualizationElementType,
         entities.stream().map(FakeEntity::uuid).map(UUID::toString).collect(Collectors.toList()));
-    try {
-      remove(player, entities);
-    } catch (InvocationTargetException e) {
-      Problem.sneaky(e);
-    }
+    remove(player, entities);
   }
 
   /**
@@ -106,12 +94,10 @@ public abstract class EntityBlockHighlight extends BlockHighlightElement {
    *
    * @param player the recipient
    * @param entities the {@link FakeEntity FakeEntities} to despawn
-   * @throws InvocationTargetException if an error occurs creating or sending the packets
    */
   protected abstract void remove(
       @NotNull Player player,
-      @NotNull @Unmodifiable Collection<@NotNull FakeEntity> entities)
-      throws InvocationTargetException;
+      @NotNull @Unmodifiable Collection<@NotNull FakeEntity> entities);
 
   private Collection<FakeEntity> getLocalEntities() {
     if (visualizationElementType == VisualizationElementType.SIDE) {

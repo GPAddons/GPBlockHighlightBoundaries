@@ -12,7 +12,6 @@ import com.griefprevention.util.IntVector;
 import com.griefprevention.visualization.Boundary;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import java.lang.reflect.InvocationTargetException;
 import java.util.function.UnaryOperator;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -38,8 +37,7 @@ class ProtocolLibDebugHighlight extends DebugBlockHighlight {
   @Override
   protected void sendPacket(
       @NotNull Player player,
-      @NotNull UnaryOperator<@NotNull ByteBuf> write)
-      throws InvocationTargetException {
+      @NotNull UnaryOperator<@NotNull ByteBuf> write) {
     PacketContainer packet = new PacketContainer(Server.CUSTOM_PAYLOAD);
     packet.getMinecraftKeys().write(0, new MinecraftKey(getChannel()));
     Object packetDataSerializer = MinecraftReflection.getPacketDataSerializer(write.apply(Unpooled.buffer()));

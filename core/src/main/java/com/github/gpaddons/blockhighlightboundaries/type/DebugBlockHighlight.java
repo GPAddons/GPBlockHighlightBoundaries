@@ -1,12 +1,10 @@
 package com.github.gpaddons.blockhighlightboundaries.type;
 
 import com.github.gpaddons.blockhighlightboundaries.HighlightConfiguration;
-import com.github.gpaddons.blockhighlightboundaries.Problem;
 import com.griefprevention.util.IntVector;
 import com.griefprevention.visualization.Boundary;
 import io.netty.buffer.ByteBuf;
 import java.awt.Color;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.function.UnaryOperator;
 import org.bukkit.World;
@@ -91,11 +89,7 @@ public abstract class DebugBlockHighlight extends BlockHighlightElement {
 
   @Override
   protected void draw(@NotNull Player player, @NotNull World world) {
-    try {
-      sendPacket(player, this::writeData);
-    } catch (InvocationTargetException e) {
-      Problem.sneaky(e);
-    }
+    sendPacket(player, this::writeData);
   }
 
   @Contract("_ -> param1")
@@ -112,20 +106,14 @@ public abstract class DebugBlockHighlight extends BlockHighlightElement {
    *
    * @param player the recipient
    * @param write the {@link ByteBuf} modification
-   * @throws InvocationTargetException if an error occurs creating or sending the packet
    */
   protected abstract void sendPacket(
       @NotNull Player player,
-      @NotNull UnaryOperator<@NotNull ByteBuf> write)
-      throws InvocationTargetException;
+      @NotNull UnaryOperator<@NotNull ByteBuf> write);
 
   @Override
   protected void erase(@NotNull Player player, @NotNull World world) {
-    try {
-      sendPacket(player, this::writeErase);
-    } catch (InvocationTargetException e) {
-      Problem.sneaky(e);
-    }
+    sendPacket(player, this::writeErase);
   }
 
   @Contract("_ -> param1")

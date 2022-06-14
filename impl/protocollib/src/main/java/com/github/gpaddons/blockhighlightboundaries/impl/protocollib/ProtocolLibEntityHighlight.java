@@ -13,10 +13,10 @@ import com.github.gpaddons.blockhighlightboundaries.type.EntityBlockHighlight;
 import com.github.gpaddons.blockhighlightboundaries.type.VisualizationElementType;
 import com.griefprevention.util.IntVector;
 import com.griefprevention.visualization.Boundary;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
@@ -42,12 +42,10 @@ class ProtocolLibEntityHighlight extends EntityBlockHighlight {
   }
 
   @Override
-  protected void spawn(@NotNull Player player, @NotNull FakeEntity fakeEntity)
-      throws InvocationTargetException {
-    PacketContainer spawn = new PacketContainer(Server.SPAWN_ENTITY_LIVING);
+  protected void spawn(@NotNull Player player, @NotNull FakeEntity fakeEntity) {
+    PacketContainer spawn = new PacketContainer(Server.SPAWN_ENTITY);
     spawn.getIntegers().write(0, fakeEntity.entityId());
-    // Magic value: entity type ID for magma cube
-    spawn.getIntegers().write(1, 48);
+    spawn.getEntityTypeModifier().write(0, EntityType.MAGMA_CUBE);
     spawn.getUUIDs().write(0, fakeEntity.uuid());
     spawn.getDoubles()
         .write(0, getCoordinate().x() + fakeEntity.localPosition().getX())
@@ -88,8 +86,7 @@ class ProtocolLibEntityHighlight extends EntityBlockHighlight {
   @Override
   protected void remove(
       @NotNull Player player,
-      @NotNull @Unmodifiable Collection<@NotNull FakeEntity> entities)
-      throws InvocationTargetException {
+      @NotNull @Unmodifiable Collection<@NotNull FakeEntity> entities) {
     PacketContainer destroy = new PacketContainer(Server.ENTITY_DESTROY);
     destroy
         .getIntLists()
