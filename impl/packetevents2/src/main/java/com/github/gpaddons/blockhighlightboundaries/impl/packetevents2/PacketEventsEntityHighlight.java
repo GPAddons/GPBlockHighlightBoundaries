@@ -12,11 +12,11 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDe
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnLivingEntity;
 import com.griefprevention.util.IntVector;
 import com.griefprevention.visualization.Boundary;
-import io.github.retrooper.packetevents.util.SpigotDataHelper;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.EntityType;
@@ -72,7 +72,7 @@ class PacketEventsEntityHighlight extends EntityBlockHighlight {
     WrapperPlayServerSpawnLivingEntity spawn = new WrapperPlayServerSpawnLivingEntity(
         entity.entityId(),
         entity.uuid(),
-        SpigotDataHelper.fromBukkitEntityType(EntityType.MAGMA_CUBE),
+        SpigotConversionUtil.fromBukkitEntityType(EntityType.MAGMA_CUBE),
         new Vector3d(getCoordinate().x() + 0.5, getCoordinate().y(), getCoordinate().z() + 0.5),
         0F,
         0F,
