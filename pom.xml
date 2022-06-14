@@ -39,6 +39,10 @@
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
     </repository>
+    <repository>
+      <id>opencollab-snapshot</id>
+      <url>https://repo.opencollab.dev/maven-snapshots/</url>
+    </repository>
   </repositories>
 
   <dependencyManagement>
@@ -67,6 +71,12 @@
         <version>4.1.77.Final</version>
         <scope>provided</scope>
       </dependency>
+      <dependency>
+        <groupId>com.github.jikoo</groupId>
+        <artifactId>planarwrappers</artifactId>
+        <version>2.3.1</version>
+        <scope>compile</scope>
+      </dependency>
       <!-- Adapter: PacketEvents 1.X -->
       <dependency>
         <groupId>com.github.retrooper</groupId>
@@ -86,6 +96,13 @@
         <groupId>com.github.dmulloy2</groupId>
         <artifactId>ProtocolLib</artifactId>
         <version>4.8.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <!-- Bedrock support (or lack thereof) -->
+      <dependency>
+        <groupId>org.geysermc.floodgate</groupId>
+        <artifactId>api</artifactId>
+        <version>2.2.0-SNAPSHOT</version>
         <scope>provided</scope>
       </dependency>
       <!-- Modules -->

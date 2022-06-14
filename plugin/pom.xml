@@ -47,6 +47,14 @@
       <groupId>com.github.TechFortress</groupId>
       <artifactId>GriefPrevention</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.github.jikoo</groupId>
+      <artifactId>planarwrappers</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.geysermc.floodgate</groupId>
+      <artifactId>api</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -83,7 +91,20 @@
           </execution>
         </executions>
         <configuration>
+          <relocations>
+            <relocation>
+              <pattern>com.github.jikoo.planarwrappers</pattern>
+              <shadedPattern>com.github.gpaddons.blockhighlightboundaries.planarwrappers</shadedPattern>
+            </relocation>
+          </relocations>
           <filters>
+            <filter>
+              <artifact>com.github.jikoo:planarwrappers</artifact>
+              <includes>
+                <include>com/github/jikoo/planarwrappers/service/ProvidedService.class</include>
+                <include>com/github/jikoo/planarwrappers/service/ProvidedService$Wrapper.class</include>
+              </includes>
+            </filter>
             <filter>
               <artifact>**:*</artifact>
               <excludes>
