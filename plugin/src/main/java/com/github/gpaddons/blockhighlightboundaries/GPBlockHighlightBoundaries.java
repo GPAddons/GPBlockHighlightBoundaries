@@ -21,13 +21,14 @@ public class GPBlockHighlightBoundaries extends JavaPlugin implements Listener
 
   private final @NotNull PluginHighlightConfiguration configuration = new PluginHighlightConfiguration(this);
   private final @NotNull PluginTeamManager teamManager = new PluginTeamManager(this, configuration);
-  private final @NotNull FloodgateCompat floodgateCompat = new FloodgateCompat(this);
+  private FloodgateCompat floodgateCompat;
   private @Nullable VisualizationProvider provider;
 
   @Override
   public void onEnable() {
     saveDefaultConfig();
     provider = getProvider();
+    floodgateCompat = new FloodgateCompat(this);
     if (provider == null) {
       getLogger().warning("No eligible provider found!");
       getLogger().warning("Please install ProtocolLib or PacketEvents and restart your server.");
