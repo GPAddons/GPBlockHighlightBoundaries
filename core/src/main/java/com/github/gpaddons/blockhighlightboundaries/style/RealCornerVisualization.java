@@ -1,7 +1,6 @@
 package com.github.gpaddons.blockhighlightboundaries.style;
 
 import com.github.gpaddons.blockhighlightboundaries.HighlightConfiguration;
-import com.github.gpaddons.blockhighlightboundaries.Problem;
 import com.github.gpaddons.blockhighlightboundaries.type.BlockHighlightElement;
 import com.github.gpaddons.blockhighlightboundaries.type.FallThroughElement;
 import com.github.gpaddons.blockhighlightboundaries.type.VisualizationElementType;
@@ -89,7 +88,7 @@ public abstract class RealCornerVisualization extends BlockBoundaryVisualization
     try {
       super.draw(player, boundary);
       this.lastSend = System.currentTimeMillis();
-    } catch (Problem e) {
+    } catch (Exception e) {
       Collection<BlockElement> fallthroughElements = new ArrayList<>();
       for (BlockElement element : this.elements) {
         if (element instanceof BlockHighlightElement highlightElement) {
