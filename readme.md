@@ -16,6 +16,14 @@ GPBHB relies on protocol-based client-side visualizations. As a result, to keep 
 
 If both are installed, ProtocolLib will be preferred - PacketEvents does not support all configuration options.
 
+## Limitations
+
+GPBHB leverages the Glowing effect or the debug block depending on your settings.
+Bedrock clients do not have either of these features.
+
+GPBHB will automatically ignore users from Geyser if Floodgate is installed,
+but if you are using another proxy, claims may not appear at all for Bedrock players.
+
 ## Samples:
 
 `FLAT` area visualization using `GLOWING_ENTITY`:

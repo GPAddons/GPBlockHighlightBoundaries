@@ -103,6 +103,11 @@
               <includes>
                 <include>com/github/jikoo/planarwrappers/service/ProvidedService.class</include>
                 <include>com/github/jikoo/planarwrappers/service/ProvidedService$Wrapper.class</include>
+                <include>com/github/jikoo/planarwrappers/event/ConsumerEventExecutor.class</include>
+                <include>com/github/jikoo/planarwrappers/event/Event$1.class</include>
+                <include>com/github/jikoo/planarwrappers/event/Event.class</include>
+                <include>com/github/jikoo/planarwrappers/event/KeyedListener$1.class</include>
+                <include>com/github/jikoo/planarwrappers/event/KeyedListener.class</include>
               </includes>
             </filter>
             <filter>
