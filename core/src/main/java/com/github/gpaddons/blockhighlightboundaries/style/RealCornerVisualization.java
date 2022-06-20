@@ -85,9 +85,9 @@ public abstract class RealCornerVisualization extends BlockBoundaryVisualization
   @Override
   protected void draw(@NotNull Player player,
       @NotNull Boundary boundary) {
+    this.lastSend = System.currentTimeMillis();
     try {
       super.draw(player, boundary);
-      this.lastSend = System.currentTimeMillis();
     } catch (Exception e) {
       Collection<BlockElement> fallthroughElements = new ArrayList<>();
       for (BlockElement element : this.elements) {
