@@ -95,7 +95,7 @@
       <dependency>
         <groupId>com.github.dmulloy2</groupId>
         <artifactId>ProtocolLib</artifactId>
-        <version>master-SNAPSHOT</version>
+        <version>4.8.0</version>
         <scope>provided</scope>
       </dependency>
       <!-- Bedrock support (or lack thereof) -->
