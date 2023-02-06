@@ -74,7 +74,7 @@
       <dependency>
         <groupId>com.github.jikoo</groupId>
         <artifactId>planarwrappers</artifactId>
-        <version>2.3.3</version>
+        <version>3.0.0</version>
         <scope>compile</scope>
       </dependency>
       <!-- Adapter: PacketEvents 1.X -->
