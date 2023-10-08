@@ -37,7 +37,7 @@ public class PacketEvents2Provider implements BoundaryProvider {
     if (configuration.getType() == HighlightType.DEBUG_BLOCK) {
       Plugin plugin = server.getPluginManager().getPlugin("GPBlockHighlightBoundaries");
       Logger logger = plugin != null ? plugin.getLogger() : server.getLogger();
-      logger.warning("PacketEvents 2.0-SNAPSHOT does not (or did not yet) support custom payloads.");
+      logger.warning("PacketEvents 2 does not (or did not yet) support custom payloads.");
       logger.warning("This means that GPBHB cannot display DEBUG_BLOCK type boundaries.");
       logger.warning("Please edit your configuration to use GLOWING_ENTITY instead.");
       return false;

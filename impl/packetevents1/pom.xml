@@ -36,6 +36,8 @@
     <dependency>
       <groupId>com.github.retrooper</groupId>
       <artifactId>packetevents</artifactId>
+      <version>1.8.4</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

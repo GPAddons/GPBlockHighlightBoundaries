@@ -77,20 +77,6 @@
         <version>3.1.0</version>
         <scope>compile</scope>
       </dependency>
-      <!-- Adapter: PacketEvents 1.X -->
-      <dependency>
-        <groupId>com.github.retrooper</groupId>
-        <artifactId>packetevents</artifactId>
-        <version>2.0.0</version>
-        <scope>provided</scope>
-      </dependency>
-      <!-- Adapter: PacketEvents 2.X -->
-      <dependency>
-        <groupId>com.github.retrooper.packetevents</groupId>
-        <artifactId>spigot</artifactId>
-        <version>2.0.0</version>
-        <scope>provided</scope>
-      </dependency>
       <!-- Adapter: ProtocolLib -->
       <dependency>
         <groupId>com.github.dmulloy2</groupId>
