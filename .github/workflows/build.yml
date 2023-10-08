@@ -4,7 +4,7 @@ on:
   push:
   create:
     types: [tag]
-  pull_request_target:
+  pull_request:
 
 jobs:
   build:
