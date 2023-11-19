@@ -9,6 +9,8 @@ import org.bukkit.event.server.PluginEvent;
 import org.bukkit.plugin.Plugin;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import java.util.function.Supplier;
 
 public class FloodgateCompat extends ProvidedService<FloodgateApi> {
 
@@ -37,4 +39,9 @@ public class FloodgateCompat extends ProvidedService<FloodgateApi> {
     return service != null && service.unwrap().isFloodgatePlayer(player.getUniqueId());
   }
 
+  @Override
+  protected @Nullable Supplier<@NotNull String> logServiceClassNotLoaded() {
+    // Don't bother logging Floodgate not present.
+    return null;
+  }
 }
