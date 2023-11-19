@@ -1,5 +1,6 @@
 package com.github.gpaddons.blockhighlightboundaries.impl.protocollib;
 
+import com.comphenix.protocol.utility.MinecraftVersion;
 import com.github.gpaddons.blockhighlightboundaries.BoundaryProvider;
 import com.github.gpaddons.blockhighlightboundaries.HighlightConfiguration;
 import com.github.gpaddons.blockhighlightboundaries.TeamManager;
@@ -13,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class ProtocolLibProvider implements BoundaryProvider {
 
+  private boolean useDataValueList;
+
   @Override
   public boolean isCapable(@NotNull Server server, @NotNull HighlightConfiguration configuration) {
     if (!server.getPluginManager().isPluginEnabled("ProtocolLib")) {
@@ -21,6 +24,7 @@ public class ProtocolLibProvider implements BoundaryProvider {
 
     try {
       Class.forName("com.comphenix.protocol.ProtocolLibrary");
+      useDataValueList = MinecraftVersion.FEATURE_PREVIEW_UPDATE.atOrAbove();
       return true;
     } catch (ClassNotFoundException e) {
       return false;
@@ -33,7 +37,7 @@ public class ProtocolLibProvider implements BoundaryProvider {
       @NotNull HighlightConfiguration configuration,
       @NotNull Boundary boundary,
       @NotNull VisualizationElementType visualizationElementType) {
-    return new ProtocolLibDebugHighlight(
+    return new DebugHighlight(
         coordinate,
         configuration,
         boundary,
@@ -47,7 +51,16 @@ public class ProtocolLibProvider implements BoundaryProvider {
       @NotNull TeamManager teamManager,
       @NotNull Boundary boundary,
       @NotNull VisualizationElementType visualizationElementType) {
-    return new ProtocolLibEntityHighlight(
+    if (useDataValueList) {
+      return new EntityHighlightDataValueList(
+          coordinate,
+          configuration,
+          teamManager,
+          boundary,
+          visualizationElementType);
+    }
+
+    return new EntityHighlightDataWatcher(
         coordinate,
         configuration,
         teamManager,

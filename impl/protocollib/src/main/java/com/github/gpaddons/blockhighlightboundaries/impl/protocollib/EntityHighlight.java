@@ -21,18 +21,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
-class ProtocolLibEntityHighlight extends EntityBlockHighlight {
+abstract class EntityHighlight<T> extends EntityBlockHighlight {
 
-  /**
-   * Construct a new {@code EntityBlockHighlight} with the given coordinate.
-   *
-   * @param coordinate the in-world coordinate of the element
-   * @param configuration the configuration for highlights
-   * @param teamManager the scoreboard team manager
-   * @param boundary the boundary the element belongs to
-   * @param visualizationElementType the type of element being visualized
-   */
-  public ProtocolLibEntityHighlight(
+  public EntityHighlight(
       @NotNull IntVector coordinate,
       @NotNull HighlightConfiguration configuration,
       @NotNull TeamManager teamManager,
@@ -57,31 +48,41 @@ class ProtocolLibEntityHighlight extends EntityBlockHighlight {
     PacketContainer meta = new PacketContainer(Server.ENTITY_METADATA);
     meta.getIntegers().write(0, fakeEntity.entityId());
 
-    WrappedDataWatcher watcher = new WrappedDataWatcher();
+    T data = create();
     // Invisible (0x20) and glowing (0x40).
     Serializer byteSerializer = Registry.get(Byte.class);
-    watcher.setObject(0, byteSerializer, (byte) (0x20 | 0x40));
+    addData(data, 0, byteSerializer, (byte) (0x20 | 0x40));
     // Set name.
     String name = getName();
     Optional<WrappedChatComponent> nameOptional = name.isBlank()
         ? Optional.empty()
         : Optional.of(WrappedChatComponent.fromLegacyText(name));
-    watcher.setObject(2, WrappedDataWatcher.Registry.getChatComponentSerializer(true), nameOptional);
+    addData(data, 2, WrappedDataWatcher.Registry.getChatComponentSerializer(true), nameOptional);
     // Set name always visible.
     Serializer booleanSerializer = Registry.get(Boolean.class);
-    watcher.setObject(3, booleanSerializer, Boolean.TRUE);
+    addData(data, 3, booleanSerializer, Boolean.TRUE);
     // Set silent.
-    watcher.setObject(4, booleanSerializer, Boolean.TRUE);
+    addData(data, 4, booleanSerializer, Boolean.TRUE);
     // Set no gravity.
-    watcher.setObject(5, booleanSerializer, Boolean.TRUE);
+    addData(data, 5, booleanSerializer, Boolean.TRUE);
     // Set no AI.
-    watcher.setObject(15, byteSerializer, (byte) (0x01));
+    addData(data, 15, byteSerializer, (byte) (0x01));
     // Set slime size.
-    watcher.setObject(16, WrappedDataWatcher.Registry.get(Integer.class), getSlimeSize());
+    addData(data, 16, WrappedDataWatcher.Registry.get(Integer.class), getSlimeSize());
 
-    meta.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+    write(meta, data);
     ProtocolLibrary.getProtocolManager().sendServerPacket(player, meta);
   }
+
+  protected abstract @NotNull T create();
+
+  protected abstract void addData(
+      @NotNull T written,
+      int index,
+      @NotNull Serializer serializer,
+      @NotNull Object value);
+
+  protected abstract void write(@NotNull PacketContainer container, @NotNull T data);
 
   @Override
   protected void remove(

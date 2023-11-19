@@ -16,7 +16,7 @@ import java.util.function.UnaryOperator;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-class ProtocolLibDebugHighlight extends DebugBlockHighlight {
+class DebugHighlight extends DebugBlockHighlight {
 
   /**
    * Construct a new {@code ProtocolLibDebugHighlight}.
@@ -26,7 +26,7 @@ class ProtocolLibDebugHighlight extends DebugBlockHighlight {
    * @param boundary the boundary the element belongs to
    * @param visualizationElementType the type of element being visualized
    */
-  public ProtocolLibDebugHighlight(
+  public DebugHighlight(
       @NotNull IntVector coordinate,
       @NotNull HighlightConfiguration configuration,
       @NotNull Boundary boundary,
