@@ -81,7 +81,7 @@
       <dependency>
         <groupId>com.github.dmulloy2</groupId>
         <artifactId>ProtocolLib</artifactId>
-        <version>5.1.0</version>
+        <version>5.2.0</version>
         <scope>provided</scope>
       </dependency>
       <!-- Bedrock support (or lack thereof) -->
