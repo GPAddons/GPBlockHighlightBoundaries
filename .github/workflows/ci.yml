@@ -1,0 +1,10 @@
+name: Build
+
+on:
+  push:
+    branches-ignore:
+      - dependabot/**
+
+jobs:
+  run-ci:
+    uses: Jikoo/PlanarActions/.github/workflows/ci_maven.yml@master
