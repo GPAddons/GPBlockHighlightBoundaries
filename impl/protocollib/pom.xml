@@ -34,7 +34,7 @@
       <artifactId>GriefPrevention</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.github.dmulloy2</groupId>
+      <groupId>net.dmulloy2</groupId>
       <artifactId>ProtocolLib</artifactId>
     </dependency>
   </dependencies>
