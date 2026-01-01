@@ -2,7 +2,6 @@ package com.github.gpaddons.blockhighlightboundaries;
 
 import com.github.gpaddons.blockhighlightboundaries.style.RealCornerVisualization;
 import com.github.gpaddons.blockhighlightboundaries.style.SnapToSurface;
-import com.github.gpaddons.blockhighlightboundaries.type.DebugBlockHighlight;
 import com.github.gpaddons.blockhighlightboundaries.type.EntityBlockHighlight;
 import com.github.gpaddons.blockhighlightboundaries.type.VisualizationElementType;
 import com.github.gpaddons.blockhighlightboundaries.util.TriFunction;
@@ -41,7 +40,6 @@ public interface BoundaryProvider {
     TriFunction<Boundary, IntVector, VisualizationElementType, BlockElement> getElement
         = (boundary, vector, elementType) ->
         switch (configuration.getType()) {
-      case DEBUG_BLOCK -> getDebugHighlight(vector, configuration, boundary, elementType);
       case GLOWING_ENTITY -> getEntityHighlight(vector, configuration, teamManager, boundary, elementType);
     };
 
@@ -72,23 +70,6 @@ public interface BoundaryProvider {
 
     };
   }
-
-  /**
-   * Method for obtaining a
-   * {@link com.github.gpaddons.blockhighlightboundaries.type.HighlightType#DEBUG_BLOCK DEBUG_BLOCK}
-   * highlight implementation for the given parameters.
-   *
-   * @param coordinate the location of the element
-   * @param configuration the highlight configuration
-   * @param boundary the boundary being visualized
-   * @param visualizationElementType the type of element in the boundary being visualized
-   * @return the {@link DebugBlockHighlight} created
-   */
-  @NotNull DebugBlockHighlight getDebugHighlight(
-      @NotNull IntVector coordinate,
-      @NotNull HighlightConfiguration configuration,
-      @NotNull Boundary boundary,
-      @NotNull VisualizationElementType visualizationElementType);
 
   /**
    * Method for obtaining a

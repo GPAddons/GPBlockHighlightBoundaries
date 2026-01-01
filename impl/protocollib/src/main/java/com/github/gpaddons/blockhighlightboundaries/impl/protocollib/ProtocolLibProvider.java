@@ -4,7 +4,6 @@ import com.comphenix.protocol.utility.MinecraftVersion;
 import com.github.gpaddons.blockhighlightboundaries.BoundaryProvider;
 import com.github.gpaddons.blockhighlightboundaries.HighlightConfiguration;
 import com.github.gpaddons.blockhighlightboundaries.TeamManager;
-import com.github.gpaddons.blockhighlightboundaries.type.DebugBlockHighlight;
 import com.github.gpaddons.blockhighlightboundaries.type.EntityBlockHighlight;
 import com.github.gpaddons.blockhighlightboundaries.type.VisualizationElementType;
 import com.griefprevention.util.IntVector;
@@ -29,19 +28,6 @@ public class ProtocolLibProvider implements BoundaryProvider {
     } catch (ClassNotFoundException e) {
       return false;
     }
-  }
-
-  @Override
-  public @NotNull DebugBlockHighlight getDebugHighlight(
-      @NotNull IntVector coordinate,
-      @NotNull HighlightConfiguration configuration,
-      @NotNull Boundary boundary,
-      @NotNull VisualizationElementType visualizationElementType) {
-    return new DebugHighlight(
-        coordinate,
-        configuration,
-        boundary,
-        visualizationElementType);
   }
 
   @Override

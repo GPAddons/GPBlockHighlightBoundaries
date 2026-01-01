@@ -3,7 +3,7 @@
 spacing: 10
 viewDistance: 150
 displaySeconds: 60
-# Types: DEBUG_BLOCK, GLOWING_ENTITY
+# Types: GLOWING_ENTITY
 type: GLOWING_ENTITY
 # Styles: FLAT, SNAP_TO_SURFACE
 style: FLAT
