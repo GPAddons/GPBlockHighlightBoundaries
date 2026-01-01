@@ -21,10 +21,6 @@
     </dependency>
     <dependency>
       <groupId>com.github.gpaddons</groupId>
-      <artifactId>blockhighlightboundaries-packetevents1</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.github.gpaddons</groupId>
       <artifactId>blockhighlightboundaries-packetevents2</artifactId>
     </dependency>
     <dependency>
