@@ -12,13 +12,13 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerDe
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnLivingEntity;
 import com.griefprevention.util.IntVector;
 import com.griefprevention.visualization.Boundary;
+import io.github.retrooper.packetevents.adventure.serializer.legacy.LegacyComponentSerializer;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -52,21 +52,21 @@ class PacketEventsEntityHighlight extends EntityBlockHighlight {
         ? Optional.empty()
         : Optional.of(LegacyComponentSerializer.legacyAmpersand().deserialize(name));
 
-    List<EntityData> entityData = Arrays.asList(
+    List<EntityData<?>> entityData = Arrays.asList(
         // O: Byte: Invisible (0x20) and glowing (0x40)
-        new EntityData(0, EntityDataTypes.BYTE, (byte) (0x20 | 0x40)),
+        new EntityData<>(0, EntityDataTypes.BYTE, (byte) (0x20 | 0x40)),
         // 2: Optional TextComponent: Name
-        new EntityData(2, EntityDataTypes.OPTIONAL_COMPONENT, nameOptional),
+        new EntityData<>(2, EntityDataTypes.OPTIONAL_ADV_COMPONENT, nameOptional),
         // 3: Boolean: Name always visible
-        new EntityData(3, EntityDataTypes.BOOLEAN, nameOptional.isPresent()),
+        new EntityData<>(3, EntityDataTypes.BOOLEAN, nameOptional.isPresent()),
         // 4: Boolean: Silent
-        new EntityData(4, EntityDataTypes.BOOLEAN, true),
+        new EntityData<>(4, EntityDataTypes.BOOLEAN, true),
         // 5: Boolean: No gravity
-        new EntityData(5, EntityDataTypes.BOOLEAN, true),
+        new EntityData<>(5, EntityDataTypes.BOOLEAN, true),
         // 15: Byte: No AI (0x01)
-        new EntityData(15, EntityDataTypes.BYTE, (byte) (0x01)),
+        new EntityData<>(15, EntityDataTypes.BYTE, (byte) (0x01)),
         // 16: Integer: Slime size
-        new EntityData(16, EntityDataTypes.INT, getSlimeSize())
+        new EntityData<>(16, EntityDataTypes.INT, getSlimeSize())
     );
 
     WrapperPlayServerSpawnLivingEntity spawn = new WrapperPlayServerSpawnLivingEntity(
