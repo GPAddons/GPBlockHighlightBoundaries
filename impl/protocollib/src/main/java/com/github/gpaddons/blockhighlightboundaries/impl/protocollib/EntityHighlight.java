@@ -13,6 +13,7 @@ import com.github.gpaddons.blockhighlightboundaries.type.EntityBlockHighlight;
 import com.github.gpaddons.blockhighlightboundaries.type.VisualizationElementType;
 import com.griefprevention.util.IntVector;
 import com.griefprevention.visualization.Boundary;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,7 +51,7 @@ abstract class EntityHighlight<T> extends EntityBlockHighlight {
 
     T data = create();
     // Invisible (0x20) and glowing (0x40).
-    Serializer byteSerializer = Registry.get(Byte.class);
+    Serializer byteSerializer = Registry.get((Type) Byte.class);
     addData(data, 0, byteSerializer, (byte) (0x20 | 0x40));
     // Set name.
     String name = getName();
@@ -59,7 +60,7 @@ abstract class EntityHighlight<T> extends EntityBlockHighlight {
         : Optional.of(WrappedChatComponent.fromLegacyText(name));
     addData(data, 2, WrappedDataWatcher.Registry.getChatComponentSerializer(true), nameOptional);
     // Set name always visible.
-    Serializer booleanSerializer = Registry.get(Boolean.class);
+    Serializer booleanSerializer = Registry.get((Type) Boolean.class);
     addData(data, 3, booleanSerializer, Boolean.TRUE);
     // Set silent.
     addData(data, 4, booleanSerializer, Boolean.TRUE);
@@ -68,7 +69,7 @@ abstract class EntityHighlight<T> extends EntityBlockHighlight {
     // Set no AI.
     addData(data, 15, byteSerializer, (byte) (0x01));
     // Set slime size.
-    addData(data, 16, WrappedDataWatcher.Registry.get(Integer.class), getSlimeSize());
+    addData(data, 16, WrappedDataWatcher.Registry.get((Type) Integer.class), getSlimeSize());
 
     write(meta, data);
     ProtocolLibrary.getProtocolManager().sendServerPacket(player, meta);
