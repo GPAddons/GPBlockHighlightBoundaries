@@ -17,7 +17,7 @@
       <artifactId>spigot-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.github.TechFortress</groupId>
+      <groupId>com.github.GriefPrevention</groupId>
       <artifactId>GriefPrevention</artifactId>
     </dependency>
     <dependency>
