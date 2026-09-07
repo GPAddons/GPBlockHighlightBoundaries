@@ -61,7 +61,7 @@
       <dependency>
         <groupId>com.github.GriefPrevention</groupId>
         <artifactId>GriefPrevention</artifactId>
-        <version>50916872dd</version>
+        <version>8e625e4efc</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
