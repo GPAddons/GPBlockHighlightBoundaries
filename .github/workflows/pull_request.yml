@@ -6,8 +6,12 @@ on:
 jobs:
   run-ci:
     uses: Jikoo/PlanarActions/.github/workflows/ci_maven.yml@master
-  store-dependabot-pr-data:
-    if: "github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'"
-    uses: Jikoo/PlanarActions/.github/workflows/pr_automerge_prep.yml@master
+  approve-and-merge-dependabot:
+    if: "github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]'"
+    needs: [ "run-ci" ]
+    uses: Jikoo/PlanarActions/.github/workflows/dependabot_automerge.yml@master
     with:
-      pr-number: ${{ github.event.number }}
+      pr-url: ${{github.event.pull_request.html_url}}
+    permissions:
+      contents: write
+      pull-requests: write
